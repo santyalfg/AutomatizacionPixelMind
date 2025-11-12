@@ -1,3 +1,7 @@
+# Fecha creacion: 12/11/2025
+# Ultima fecha de modificación: 12/11/2025
+# Autor: David Santiago Alfonso Guzman
+# Descripcion: Este archivo es el archivo base de la automatizacion y sus procesos
 # ================================================================
 # COrrer test con capturas "pytest tests/ --html=report.html --self-contained-html -v"
 # ================================================================
