@@ -1,4 +1,3 @@
-
 # Fecha creacion: 10/11/2025
 # Ultima fecha de modificación: 10/11/2025
 # Autor: David Santiago Alfonso Guzman
