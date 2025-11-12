@@ -1,3 +1,9 @@
+# Fecha creacion: 9/11/2025
+# Ultima fecha de modificación: 11/11/2025
+# Autor: David Santiago Alfonso Guzman
+# Descripcion: Este archivo es la plantilla de la pagina Login de automatizacion para concectar con los test
+
+
 from selenium.webdriver.common.by import By
 from selenium.common.exceptions import NoSuchElementException
 
