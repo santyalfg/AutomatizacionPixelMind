@@ -1,5 +1,8 @@
+# Fecha creacion: 9/11/2025
+# Ultima fecha de modificación: 11/11/2025
+# Autor: David Santiago Alfonso Guzman
+# Descripcion: Este archivo es la plantilla de la pagina Login de Automatizacion para poder ver si el navegador o drivers de este funcionan
 
-#Automatizacion para poder ver si el navegador o drivers de este funcionan
 from selenium import webdriver
 from selenium.webdriver.edge.service import Service
 from selenium.webdriver.common.by import By
