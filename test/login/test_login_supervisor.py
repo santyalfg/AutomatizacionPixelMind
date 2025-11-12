@@ -1,3 +1,10 @@
+
+# Fecha creacion: 10/11/2025
+# Ultima fecha de modificación: 11/11/2025
+# Autor: David Santiago Alfonso Guzman
+# Descripcion: Este archivo prueba el test case #4 sobre el Inicio de sesion supervisor datos correctos
+
+
 import pytest
 from pages.login_page import LoginPage
 
@@ -21,32 +28,4 @@ def test_inicio_sesion_supervisor_datos_correctos(setup):
 
     pass
 
-    """
-    CASO DE PRUEBA #7
-    Nombre: Inicio de sesion supervisor datos correctos
-
-    Descripción:
-        El sistema debe validar y dar acceso a un usuario tipo supervisor con sus datos
-        funcionales y correctos
-
-    Precondiciones:
-        - Usario y contraseña funcional
-        - Usuario ya registrado tipo supervisor
-
-    Entradas:
-        - Username (gestor válido)
-        - Contraseña (correcta)
-
-    Pasos:
-        1. Dar click en el boton "Inicio de sesión"
-        2. Llenar con los datos del usuario (funcional)
-        3. Dar click en "ingresar"
-
-    Resultados esperados:
-        1. Dejar ingresar a la pantalla del fomulario de inicio de sesion
-        2. No mostrara ninguna alerta por los datos
-        3. Dejar ingresar al dashboard supervisor del sistema
-    
-    Poscondición:
-        El sistema dejará ingresar al dashboard supervisor al usuario sin ninguna alrta o problema
-    """
+   
