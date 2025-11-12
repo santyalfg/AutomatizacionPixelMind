@@ -1,3 +1,10 @@
+
+# Fecha creacion: 10/11/2025
+# Ultima fecha de modificación: 11/11/2025
+# Autor: David Santiago Alfonso Guzman
+# Descripcion: Este archivo prueba el test case #1 sobre el Inicio de sesión gestor con datos correctos
+
+
 import pytest
 from pages.login_page import LoginPage
 
@@ -21,30 +28,4 @@ def test_inicio_sesion_gestor_datos_correctos(setup):
 
     pass
 
-    """
-    CASO DE PRUEBA #4
-    Nombre: Inicio de sesión gestor con datos correctos
-
-    Descripción:
-        El sistema debe validar y dar acceso a un usuario tipo gestor con sus datos correctos y funcionales.
-        El usuario debe ser previamente creado por el administrador.
-
-    Precondiciones:
-        - El usuario gestor existe en el sistema y sus credenciales son válidas.
-
-    Entradas:
-        - Username (gestor válido)
-        - Contraseña (correcta)
-
-    Pasos:
-        1. Dar click en el botón "Inicio de sesión".
-        2. Llenar con los datos del usuario (funcional).
-        3. Dar click en "Ingresar".
-
-    Resultados esperados:
-        1. El sistema no muestra alertas ni errores.
-        2. Deja ingresar al dashboard del gestor sin problemas.
     
-    Poscondición:
-        El sistema muestra el dashboard del gestor autenticado.
-    """

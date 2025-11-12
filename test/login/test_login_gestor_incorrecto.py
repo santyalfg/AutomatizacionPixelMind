@@ -1,3 +1,10 @@
+
+# Fecha creacion: 10/11/2025
+# Ultima fecha de modificación: 11/11/2025
+# Autor: David Santiago Alfonso Guzman
+# Descripcion: Este archivo prueba el test case #2 sobre el Inicio de sesion gestor datos equivocados
+
+
 import pytest
 from pages.login_page import LoginPage
 
@@ -20,31 +27,3 @@ def test_inicio_sesion_gestor_datos_equivocados(setup):
 
     pass
 
-        """
-    CASO DE PRUEBA #5
-    Nombre: Inicio de sesion gestor datos equivocados
-
-    Descripción:
-        El sistema debe validar y  NO dar acceso a un usuario tipo gestor
-        con sus datos equivocados, y debera mostrara la notificacion de inicio en sesión
-
-    Precondiciones:
-        - Usario de gestor y contraseña equivocados
-    
-    Entradas:
-        - Username (gestor)
-        - Contraseña (Invalida)
-    
-    Pasos:
-        1. Dar click en el boton "Inicio de sesión"
-        2. Llenar con los datos del usuario (errados)
-        3. Dar click en "ingresar"
-    
-    Resultados esperados:
-        1. Dejar ingresar a la pantalla del fomulario de inicio de sesion
-        2. No mostrara ninguna alerta por falta de datos
-        3. No dejara ingresar a la siguiente pantalla y mostrara una notificacio de datos errados
-    
-    Poscondición:
-        El sistema NO dejará ingresar al sistema al usuario tipo gestor
-    """
