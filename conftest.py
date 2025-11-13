@@ -35,7 +35,7 @@ def setup(request):
     if not os.path.exists("screenshots"):
         os.makedirs("screenshots")
 
-    request.cls.driver = driver
+    #request.cls.driver = driver
     yield driver
     driver.quit()
 

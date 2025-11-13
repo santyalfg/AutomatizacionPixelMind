@@ -1,52 +1,57 @@
-# Fecha creacion: 9/11/2025
-# Ultima fecha de modificación: 11/11/2025
-# Autor: David Santiago Alfonso Guzman
-# Descripcion: Este archivo es la plantilla de la pagina creacion PQRS de automatizacion para concectar con los test
-
-
 from selenium.webdriver.common.by import By
-from selenium.common.exceptions import NoSuchElementException
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.common.exceptions import TimeoutException, NoSuchElementException
 
 class PQRSPage:
     def __init__(self, driver):
         self.driver = driver
 
-        # Selectores (Faltantes de FRONT)
-        self.btn_registrar = ("", "")   
-        self.input_username_register = ("", "")      
-        self.input_password_register = ("", "")     
-        self.input_paword_2_register = ("", "")
-        self.input_email_register = ("", "")
-        self.btn_confirm_register = ("", "")        
-        self.alerta_error_register = ("", "")        
+        # Selectores del formulario (usa los nombres reales de los elementos del front)
+        self.select_tipo_solicitud = (By.NAME, "tipo_solicitud")
+        self.input_asunto = (By.NAME, "asunto")
+        self.input_descripcion = (By.NAME, "descripcion")
+        self.input_nombre = (By.NAME, "nombre_usuario")
+        self.input_email = (By.NAME, "email_usuario")
+        self.input_archivo = (By.NAME, "adjunto")
+        self.btn_enviar = (By.CSS_SELECTOR, "button[type='submit']")
+        self.alert_exito = (By.CLASS_NAME, "alert-success")
 
-    #Faltante URL ó ruta de sistema
-    def abrir_pagina_registro(self, url):
-        """Abre la página del sistema."""
+    def abrir_pagina(self, url):
+        """Abre la página del formulario PQRS y espera a que cargue."""
         self.driver.get(url)
-
-    def registro(self, usuario, contrasena, contrasena2, email):
-        """Simula el inicio de sesión con las credenciales dadas."""
-        self.driver.find_element(*self.btn_registrar).click()
-        self.driver.find_element(*self.input_username_register).send_keys(usuario)
-        self.driver.find_element(*self.input_password_register).send_keys(contrasena)
-        self.driver.find_element(*self.input_paword_2_register).send_keys(contrasena2)
-        self.driver.find_element(*self.input_email_register).send_keys(email)
-        self.driver.find_element(*self.btn_confirm_register).click()
-        pass
-
-    def mensaje_error_visible_register(self):
-        """Verifica si aparece una notificación o mensaje de error."""
         try:
-            elemento = self.driver.find_element(*self.alerta_error_register)
-            return elemento.is_displayed()
-        except NoSuchElementException:
-            return False
-    
-    def obtener_texto_error_register(self):
-    """Devuelve el texto del mensaje de error si existe."""
-    try:
-        return self.driver.find_element(*self.alerta_error_register).text
-    except:
-        return ""
+            # Espera hasta que el campo 'asunto' sea visible (máximo 15s)
+            WebDriverWait(self.driver, 15).until(
+                EC.visibility_of_element_located(self.input_asunto)
+            )
+            print("Página PQRS cargada correctamente.")
+        except TimeoutException:
+            print("página PQRS no cargó correctamente dentro del tiempo esperado.")
 
+    def llenar_formulario(self, tipo, asunto, descripcion, nombre, email, archivo_path):
+        """Llena el formulario de PQRS con los datos dados."""
+        from selenium.webdriver.support.ui import Select
+
+        Select(self.driver.find_element(*self.select_tipo_solicitud)).select_by_value(tipo)
+        self.driver.find_element(*self.input_asunto).send_keys(asunto)
+        self.driver.find_element(*self.input_descripcion).send_keys(descripcion)
+        self.driver.find_element(*self.input_nombre).send_keys(nombre)
+        self.driver.find_element(*self.input_email).send_keys(email)
+
+        if archivo_path:
+            self.driver.find_element(*self.input_archivo).send_keys(archivo_path)
+
+    def enviar_formulario(self):
+        """Hace clic en el botón de envío."""
+        self.driver.find_element(*self.btn_enviar).click()
+
+    def obtener_mensaje_exito(self):
+        """Devuelve el texto del mensaje de éxito."""
+        try:
+            WebDriverWait(self.driver, 10).until(
+                EC.visibility_of_element_located(self.alert_exito)
+            )
+            return self.driver.find_element(*self.alert_exito).text
+        except TimeoutException:
+            return " No se encontró mensaje de éxito."
