@@ -18,7 +18,7 @@ EDGE_DRIVER_PATH = r"C:\SeleniumDrivers\edgedriver_win64\msedgedriver.exe"
 
 
 
-# FIXTURE DE CONFIGURACIÓN DEL DRIVER
+# CONFIGURACIÓN DEL DRIVER
 
 @pytest.fixture
 def setup():
@@ -29,7 +29,7 @@ def setup():
     driver.quit()
 
 
-# HOOK PARA OBTENER ESTADO DEL TEST (PASSED/FAILED)
+# OBTENER ESTADO DEL TEST (PASSED/FAILED)
 
 @pytest.hookimpl(tryfirst=True, hookwrapper=True)
 def pytest_runtest_makereport(item, call):
