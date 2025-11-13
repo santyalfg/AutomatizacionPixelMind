@@ -1,5 +1,5 @@
 # Fecha creacion: 12/11/2025
-# Ultima fecha de modificación: 12/11/2025
+# Ultima fecha de modificación: 13/11/2025
 # Autor: David Santiago Alfonso Guzman
 # Descripcion: Este archivo es el archivo base de la automatizacion y sus procesos
 # ================================================================
@@ -16,7 +16,40 @@ import datetime
 # Ruta de tu driver Edge
 EDGE_DRIVER_PATH = r"C:\SeleniumDrivers\edgedriver_win64\msedgedriver.exe"
 
+#Lista global para registrar los pasos
+test_results = []
 
+@pytest.fixture
+def setup(request):
+    ""Inicar Navegador por EDGE""
+    service =
+    Service(executable_path=EDGE_DRIVER_PATH)
+    driver = webdriver.Edge(service=service)
+    driver.maximize_window()
+
+    #Carpeta de pantallazo
+    if not os.path.exists("screenshots"):
+        os.makedirs("screenshots")
+
+    request.cls.driver = driver
+    yield driver
+    driver.quit()
+
+@pytest.hookimpl(tryfirst=True, hookwrapper=True)
+def pytest_runtest_makereport(item, call):
+    ""Registrar resultado final del test"" 
+    outcome = yield
+    rep = outcome.get_result()
+
+    if rep.when == "call":
+#Guardar nombre, estado y tiempo en lista global
+    test_results.append({
+        "name":item.name,
+        "outcome":rep.outcome,
+        "duration":round(rep.duration,2),
+        "timestamp":
+    datetime.datetime.now().strftime("%H:%M:%S")
+    })
 
 # CONFIGURACIÓN DEL DRIVER
 

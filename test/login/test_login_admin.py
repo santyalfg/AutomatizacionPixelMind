@@ -5,25 +5,26 @@
 
 
 import pytest
+import time
 from pages.login_page import LoginPage
 
-@pytest.mark.regresion
-def test_inicio_sesion_admin_datos_correctos(setup):
+@pytest.mark.usefixtures("setup")
+class TestLoginAdmin:
 
-    driver = setup
-    login = LoginPage(driver)
+    def test_inicio_sesion_admin_datos_correctos(self):
+        driver = self.driver
+        login = LoginPage(driver)
 
-    login.abrir_pagina("URL_DEL_SISTEMA")
+        driver.get("URL")
+        driver.save_screenshot("screenshots/paso_1_pantalla_login.png")
 
-    usuario = "adminQA"
-    contrasena = "clave_admin"
+        login.ingresar_datos("usuario_demo", "clave123")
+        driver.save_screenshot("screenshots/paso_1_pantalla_login.png")
 
-    login.iniciar_sesion(usuario, contrasena)
+        login.click_ingresar()
+        time.sleep(2)
+        driver.save_screenshot("screenshots/paso_3_pantalla_dashboard.png")
 
-    # Validaciones
-    assert "Dashboard Administrador" in driver.title or "administrador" in driver.current_url.lower(), \
-    #        
-     assert not login.mensaje_error_visible(), "Se mostró una alerta inesperada."
+        assert"Dashboard cliente" in driver.title
 
-    pass
 
