@@ -1,5 +1,7 @@
-# test_pqrs_creacion.py
-# Caso 20 - Creación PQRS tipo Petición con datos válidos y archivo adjunto
+# Fecha creacion: 10/11/2025
+# Ultima fecha de modificación: 13/11/2025
+# Autor: David Santiago Alfonso Guzman
+# Descripcion: Este archivo prueba el test case #20 sobre reación PQRS tipo Petición con datos válidos y archivo adjunto
 
 import os
 import time
