@@ -1,9 +1,11 @@
-# Fecha creacion: 12/11/2025
-# Ultima fecha de modificación: 13/11/2025
-# Autor: David Santiago Alfonso Guzman
-# Descripcion: Este archivo es el archivo base de la automatizacion y sus procesos
 # ================================================================
-# COrrer test con capturas "pytest tests/ --html=report.html --self-contained-html -v"
+# Fecha creación: 12/11/2025
+# Última modificación: 13/11/2025
+# Autor: David Santiago Alfonso Guzmán
+# Descripción: Archivo base de la automatización y sus procesos
+# ================================================================
+# Ejecutar pruebas con capturas:
+# pytest tests/ --html=report.html --self-contained-html -v
 # ================================================================
 
 import pytest
@@ -13,21 +15,23 @@ from pytest_html import extras
 import os
 import datetime
 
-# Ruta de tu driver Edge
+# Ruta del driver de Edge
 EDGE_DRIVER_PATH = r"C:\SeleniumDrivers\edgedriver_win64\msedgedriver.exe"
 
-#Lista global para registrar los pasos
+# Lista global para registrar resultados
 test_results = []
 
+# ================================================================
+# CONFIGURACIÓN DEL DRIVER
+# ================================================================
 @pytest.fixture
 def setup(request):
-    ""Inicar Navegador por EDGE""
-    service =
-    Service(executable_path=EDGE_DRIVER_PATH)
+    """Inicializa el navegador Edge antes de cada test."""
+    service = Service(executable_path=EDGE_DRIVER_PATH)
     driver = webdriver.Edge(service=service)
     driver.maximize_window()
 
-    #Carpeta de pantallazo
+    # Crear carpeta para capturas si no existe
     if not os.path.exists("screenshots"):
         os.makedirs("screenshots")
 
@@ -35,47 +39,28 @@ def setup(request):
     yield driver
     driver.quit()
 
+
+# ================================================================
+# REGISTRO DE RESULTADOS EN LISTA GLOBAL
+# ================================================================
 @pytest.hookimpl(tryfirst=True, hookwrapper=True)
 def pytest_runtest_makereport(item, call):
-    ""Registrar resultado final del test"" 
+    """Registra el resultado final de cada test."""
     outcome = yield
     rep = outcome.get_result()
 
     if rep.when == "call":
-#Guardar nombre, estado y tiempo en lista global
-    test_results.append({
-        "name":item.name,
-        "outcome":rep.outcome,
-        "duration":round(rep.duration,2),
-        "timestamp":
-    datetime.datetime.now().strftime("%H:%M:%S")
-    })
-
-# CONFIGURACIÓN DEL DRIVER
-
-@pytest.fixture
-def setup():
-    service = Service(executable_path=EDGE_DRIVER_PATH)
-    driver = webdriver.Edge(service=service)
-    driver.maximize_window()
-    yield driver
-    driver.quit()
+        test_results.append({
+            "name": item.name,
+            "outcome": rep.outcome,
+            "duration": round(rep.duration, 2),
+            "timestamp": datetime.datetime.now().strftime("%H:%M:%S")
+        })
 
 
-# OBTENER ESTADO DEL TEST (PASSED/FAILED)
-
-@pytest.hookimpl(tryfirst=True, hookwrapper=True)
-def pytest_runtest_makereport(item, call):
-    """Permite obtener el resultado (passed/failed) de cada test."""
-    outcome = yield
-    rep = outcome.get_result()
-    setattr(item, "rep_" + rep.when, rep)
-    return rep
-
-
-
+# ================================================================
 # CAPTURA AUTOMÁTICA DE PANTALLAZOS
-
+# ================================================================
 @pytest.fixture(autouse=True)
 def screenshot_on_failure(request, setup):
     """Toma capturas automáticas y las adjunta al reporte HTML."""
@@ -83,31 +68,26 @@ def screenshot_on_failure(request, setup):
     driver = setup
     test_name = request.node.name
 
-    # Crear carpeta para guardar capturas
     screenshots_dir = "screenshots"
     if not os.path.exists(screenshots_dir):
         os.makedirs(screenshots_dir)
 
-    # Si falla la prueba
-    if request.node.rep_call.failed:
-        screenshot_path = os.path.join(screenshots_dir, f"{test_name}_FAILED.png")
-        driver.save_screenshot(screenshot_path)
-        if hasattr(request.node, "report"):
-            request.node.report.extra = getattr(request.node.report, "extra", [])
-            request.node.report.extra.append(pytest_html.extras.png(screenshot_path))
+    screenshot_path = os.path.join(screenshots_dir, f"{test_name}_{datetime.datetime.now().strftime('%H%M%S')}.png")
+    driver.save_screenshot(screenshot_path)
 
-    # Si pasa la prueba 
-    elif request.node.rep_call.passed:
-        screenshot_path = os.path.join(screenshots_dir, f"{test_name}_PASSED.png")
-        driver.save_screenshot(screenshot_path)
-        if hasattr(request.node, "report"):
-            request.node.report.extra = getattr(request.node.report, "extra", [])
-            request.node.report.extra.append(pytest_html.extras.png(screenshot_path))
+    # Adjuntar imagen al reporte HTML
+    if hasattr(request.node, "rep_call") and request.node.rep_call:
+        if hasattr(request.node.rep_call, "extra"):
+            extras_list = request.node.rep_call.extra
+        else:
+            extras_list = []
+        extras_list.append(extras.png(screenshot_path))
+        request.node.rep_call.extra = extras_list
 
 
-
-# CONFIGURACIÓN DE METADATOS PARA EL REPORTE HTML
-
+# ================================================================
+# CONFIGURACIÓN DEL REPORTE HTML
+# ================================================================
 def pytest_html_report_title(report):
     """Cambia el título del reporte HTML."""
     report.title = "Reporte de Automatización - Inicio de Sesión"
