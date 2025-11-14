@@ -55,3 +55,20 @@ class PQRSPage:
             return self.driver.find_element(*self.alert_exito).text
         except TimeoutException:
             return " No se encontró mensaje de éxito."
+
+    def obtener_mensaje_error(self):
+        """
+        Devuelve el texto del mensaje de error mostrado cuando se adjunta
+        un archivo inválido o de tamaño no permitido.
+        """
+        try:
+            elemento = self.driver.find_element(
+                By.XPATH,
+                "//div[contains(@class,'alert') or contains(@class,'error') or contains(text(),'archivo') or contains(text(),'Error')]"
+            )
+            texto = elemento.text.strip()
+            print(f"Mensaje de error detectado: {texto}")
+            return texto
+        except NoSuchElementException:
+            print(" No se encontró mensaje de error en pantalla.")
+            return ""
