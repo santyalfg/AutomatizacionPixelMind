@@ -72,3 +72,19 @@ class PQRSPage:
         except NoSuchElementException:
             print(" No se encontró mensaje de error en pantalla.")
             return ""
+        
+        def obtener_errores_campos_obligatorios(self):
+
+            try:
+                errores = self.driver.find_elements(
+                    By.XPATH,
+                    "//p[contains(@class,'text-red') or contains(text(),'oblig') or contains(text(),'requer')]"
+                )
+
+                textos = [e.text.strip() for e in errores if e.text.strip()]
+                print(f"Errores detectados campos obligatorios: {textos}")
+
+                return " | ".join(textos)
+            
+            except:
+                return ""
