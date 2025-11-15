@@ -30,7 +30,7 @@ def test_creacion_pqrs_peticion_campo_asunto_maximo_caracteres(driver, request):
     """Caso #22: Creacion PQRS, opcion peticion, caracteres maximos campo asunto"""
 
     pqrs = PQRSPage(driver)
-    pqrs.abrir_pagina("http://localhost:3000")
+    pqrs.abrir_pagina("http://localhost:5173")
 
     
 

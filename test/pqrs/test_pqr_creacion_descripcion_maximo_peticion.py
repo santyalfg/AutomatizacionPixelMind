@@ -29,7 +29,7 @@ def test_creacion_pqrs_peticion_campo_descripcion_maximo_caracteres(driver, requ
     """Caso #23: Creacion PQRS, opcion peticion, caracteres maximos campo descripcion"""
 
     pqrs = PQRSPage(driver)
-    pqrs.abrir_pagina("http://localhost:3000")
+    pqrs.abrir_pagina("http://localhost:5173")
 
     
 

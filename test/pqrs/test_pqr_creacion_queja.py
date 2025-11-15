@@ -30,7 +30,7 @@ def test_creacion_pqrs_queja_con_archivo(driver, request):
     """Caso #26: Creacion PQRS ,opción queja , datos validos y con archivos adjuntos"""
 
     pqrs = PQRSPage(driver)
-    pqrs.abrir_pagina("http://localhost:3000")
+    pqrs.abrir_pagina("http://localhost:5173")
 
     archivo_path = os.path.abspath("resources/archivo_prueba.pdf")
 

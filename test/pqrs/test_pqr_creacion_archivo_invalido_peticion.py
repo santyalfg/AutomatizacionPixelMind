@@ -30,7 +30,7 @@ def test_creacion_pqrs_peticion_con_archivo_invalido(driver, request):
     """Caso #21: Creacion PQRS ,opcion peticion, datos validos , con archivos invalidos"""
 
     pqrs = PQRSPage(driver)
-    pqrs.abrir_pagina("http://localhost:3000")
+    pqrs.abrir_pagina("http://localhost:5173")
 
     archivo_path = os.path.abspath("resources/package-lock.json")
 

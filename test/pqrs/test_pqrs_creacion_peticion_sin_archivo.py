@@ -30,7 +30,7 @@ def test_creacion_pqrs_peticion_sin_archivo(driver, request):
     """Caso #19: Crear PQRS tipo Petición con datos válidos y archivo adjunto"""
 
     pqrs = PQRSPage(driver)
-    pqrs.abrir_pagina("http://localhost:3000")
+    pqrs.abrir_pagina("http://localhost:5173")
 
 
     driver.save_screenshot("reportes/01_pagina_cargada.png")
