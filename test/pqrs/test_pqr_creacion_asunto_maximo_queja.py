@@ -1,7 +1,7 @@
 # Fecha creacion: 14/11/2025
-# Ultima fecha de modificación: 15/11/2025
+# Ultima fecha de modificación: 14/11/2025
 # Autor: David Santiago Alfonso Guzman
-# Descripcion: Este archivo prueba el test case #27 sobre la creacion PQRS ,opcion queja , datos validos , con archivos invalidos
+# Descripcion: Este archivo prueba el test case #28 sobre la creacion PQRS, opcion queja , carecteres maximos campo asunto
 
 import os
 import time
@@ -26,23 +26,23 @@ def driver():
     driver.quit()
 
 
-def test_creacion_pqrs_queja_con_archivo_invalido(driver, request):
-    """Caso #27: Creacion PQRS ,opcion queja , datos validos , con archivos invalidos"""
+def test_creacion_pqrs_queja_campo_asunto_maximo_caracteres(driver, request):
+    """Caso #27: Creacion PQRS, opcion queja , carecteres maximos campo asunto"""
 
     pqrs = PQRSPage(driver)
     pqrs.abrir_pagina("http://localhost:5173")
 
-    archivo_path = os.path.abspath("resources/package-lock.json")
+    
 
     driver.save_screenshot("reportes/01_pagina_cargada.png")
 
     pqrs.llenar_formulario(
         tipo="QUEJA",
-        asunto="Solicitud de información de servicios",
+        asunto="Solicitud de información de servicios fdsfdsfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
         descripcion="Deseo conocer los servicios disponibles para clientes nuevos.",
         nombre="David Santiago Alfonso",
         email="david@test.com",
-        archivo_path=archivo_path
+        archivo_path= None
     )
     driver.save_screenshot("reportes/02_formulario_lleno.png")
 
