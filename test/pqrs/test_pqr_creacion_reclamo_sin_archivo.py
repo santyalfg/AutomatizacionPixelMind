@@ -1,7 +1,7 @@
-# Fecha creacion: 10/11/2025
-# Ultima fecha de modificación: 13/11/2025
+# Fecha creacion: 15/11/2025
+# Ultima fecha de modificación: 15/11/2025
 # Autor: David Santiago Alfonso Guzman
-# Descripcion: Este archivo prueba el test case #32 sobre la creacion PQRS ,opción reclamo , datos validos y con archivos adjuntos
+# Descripcion: Este archivo prueba el test case #31 sobre la creacion PQRS ,opción reclamo , datos validos y sin archivos  adjuntos
 
 import os
 import time
@@ -26,13 +26,12 @@ def driver():
     driver.quit()
 
 
-def test_creacion_pqrs_reclamo_con_archivo(driver, request):
-    """Caso #32: Creacion PQRS ,opción reclamo , datos validos y con archivos adjuntos"""
+def test_creacion_pqrs_reclamo_sin_archivo(driver, request):
+    """Caso #31: Creacion PQRS ,opción reclamo , datos validos y sin archivos  adjuntos"""
 
     pqrs = PQRSPage(driver)
     pqrs.abrir_pagina("http://localhost:5173")
 
-    archivo_path = os.path.abspath("resources/archivo_prueba.pdf")
 
     driver.save_screenshot("reportes/01_pagina_cargada.png")
 
@@ -42,7 +41,7 @@ def test_creacion_pqrs_reclamo_con_archivo(driver, request):
         descripcion="Deseo conocer los servicios disponibles para clientes nuevos.",
         nombre="David Santiago Alfonso",
         email="david@test.com",
-        archivo_path=archivo_path
+        archivo_path= None
     )
     driver.save_screenshot("reportes/02_formulario_lleno.png")
 
