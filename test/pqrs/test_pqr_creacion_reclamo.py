@@ -1,7 +1,7 @@
 # Fecha creacion: 15/11/2025
 # Ultima fecha de modificación: 15/11/2025
 # Autor: David Santiago Alfonso Guzman
-# Descripcion: Este archivo prueba el test case #30 sobre la creacion PQRS, opcion queja , sin datos 
+# Descripcion: Este archivo prueba el test case #31 sobre la creacion PQRS ,opción reclamo , datos validos y sin archivos  adjuntos
 
 import os
 import time
@@ -26,27 +26,30 @@ def driver():
     driver.quit()
 
 
-def test_creacion_pqrs_queja_campo_descripcion_maximo_caracteres(driver, request):
-    """Caso #30: Creacion PQRS, opcion queja , sin datos  """
+def test_creacion_pqrs_reclamo_sin_archivo(driver, request):
+    """Caso #31: Creacion PQRS ,opción reclamo , datos validos y sin archivos  adjuntos"""
 
     pqrs = PQRSPage(driver)
     pqrs.abrir_pagina("http://localhost:5173")
 
-    
 
     driver.save_screenshot("reportes/01_pagina_cargada.png")
 
-    
+    pqrs.llenar_formulario(
+        tipo="RECLAMO",
+        asunto="Solicitud de información de servicios",
+        descripcion="Deseo conocer los servicios disponibles para clientes nuevos.",
+        nombre="David Santiago Alfonso",
+        email="david@test.com",
+        archivo_path= None
+    )
+    driver.save_screenshot("reportes/02_formulario_lleno.png")
+
     pqrs.enviar_formulario()
     time.sleep(3)
     driver.save_screenshot("reportes/03_envio_realizado.png")
 
-    # Aquí verificamos el mensaje de error
-    mensaje_error = pqrs.obtener_errores_campos_obligatorios()
+    mensaje = pqrs.obtener_mensaje_exito()
     driver.save_screenshot("reportes/04_resultado.png")
 
-    # Aserción: debe mostrar un mensaje indicando que faltan campos
-    assert any(
-    palabra in mensaje_error.lower()
-    for palabra in ["oblig", "requer", "campo"]
-), f"No se mostraron mensajes de campos obligatorios: {mensaje_error}"
+    assert "¡Éxito!" in mensaje or "radicado" in mensaje, f"Error: no se mostró mensaje de éxito. Texto: {mensaje}"
